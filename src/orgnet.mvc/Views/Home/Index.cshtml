@@ -1,0 +1,17 @@
+﻿@model IEnumerable<orgnet.mvc.Models.Node>
+
+@{
+    ViewBag.Title = "Org.Net";
+}
+
+<h3>Top-level nodes:</h3>
+
+<div>
+<ul id="node-list">
+    @foreach (var node in Model) {
+        <li>
+            <span>@node.Title</span>
+        </li>
+    }
+</ul>
+</div>
