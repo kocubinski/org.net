@@ -14,7 +14,7 @@ namespace orgnet.mvc.Controllers
 
         public ActionResult Index()
         {
-            var topNodes = dbContext.Nodes.Where(n => n.Parent == null);
+            var topNodes = dbContext.Nodes.Where(n => n.ParentId == null);
             return View(topNodes);
         }
     }

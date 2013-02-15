@@ -14,14 +14,14 @@ namespace orgnet.mvc
     {
         protected void Application_Start()
         {
+            Database.SetInitializer(new SampleData());
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            Database.SetInitializer(new SampleData());
         }
     }
 }

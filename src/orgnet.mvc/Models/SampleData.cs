@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace orgnet.mvc.Models
 {
-    public class SampleData : DropCreateDatabaseIfModelChanges<OrgContext>
+    public class SampleData : DropCreateDatabaseAlways<OrgContext>
     {
         protected override void Seed(OrgContext context)
         {
@@ -17,35 +17,35 @@ namespace orgnet.mvc.Models
 
             var networking = new Node {
                 Title = "Networking",
-                Parent = zoku,
+                ParentId = zoku.Id,
             };
             var netChildren = new List<Node> {
                 new Node {
                     Title = "RPC Framework",
                     Description = "Runtime resolution of method calls over networked objects",
-                    Parent = networking
+                    ParentId = networking.Id
                 },
                 new Node {
                     Title = "Lag compensation",
                     Description = "Compensating for network latency across connected clients.",
-                    Parent = networking
+                    ParentId = networking.Id
                 }
             };
             networking.Children = netChildren;
 
             var physics = new Node {
                 Title = "Physics",
-                Parent = zoku,
+                ParentId = zoku.Id,
             };
             var physChildren = new List<Node> {
                 new Node {
                     Title = "Bullet p-Invokes",
-                    Parent = physics
+                    ParentId = physics.Id
                 },
                 new Node {
                     Title = "Re-write bullet character controller.",
                     Description = "The character controller in bullet sucks.",
-                    Parent = physics
+                    ParentId = physics.Id
                 }
             };
             physics.Children = physChildren;

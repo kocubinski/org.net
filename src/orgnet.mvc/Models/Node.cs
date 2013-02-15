@@ -8,9 +8,9 @@ namespace orgnet.mvc.Models
         [Key]
         public int Id { get; set; }
 
-        public IEnumerable<Node> Children { get; set; }
+        public virtual ICollection<Node> Children { get; set; }
 
-        public Node Parent { get; set; }
+        public int? ParentId { get; set; }
 
         public string Title { get; set; }
 
