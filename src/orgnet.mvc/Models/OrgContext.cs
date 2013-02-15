@@ -10,8 +10,7 @@ namespace orgnet.mvc.Models
         {
             modelBuilder.Entity<Node>()
                 .HasMany(n => n.Children)
-                .WithOptional()
-                .HasForeignKey(n => n.ParentId);
+                .WithOptional(n => n.Parent);
         }
     }
 }

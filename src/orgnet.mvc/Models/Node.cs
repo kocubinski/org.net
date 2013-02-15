@@ -10,7 +10,7 @@ namespace orgnet.mvc.Models
 
         public virtual ICollection<Node> Children { get; set; }
 
-        public int? ParentId { get; set; }
+        public Node Parent { get; set; }
 
         public string Title { get; set; }
 

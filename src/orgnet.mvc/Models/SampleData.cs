@@ -17,35 +17,35 @@ namespace orgnet.mvc.Models
 
             var networking = new Node {
                 Title = "Networking",
-                ParentId = zoku.Id,
+                Parent = zoku,
             };
             var netChildren = new List<Node> {
                 new Node {
                     Title = "RPC Framework",
                     Description = "Runtime resolution of method calls over networked objects",
-                    ParentId = networking.Id
+                    Parent = networking
                 },
                 new Node {
                     Title = "Lag compensation",
                     Description = "Compensating for network latency across connected clients.",
-                    ParentId = networking.Id
+                    Parent = networking
                 }
             };
             networking.Children = netChildren;
 
             var physics = new Node {
                 Title = "Physics",
-                ParentId = zoku.Id,
+                Parent = zoku,
             };
             var physChildren = new List<Node> {
                 new Node {
                     Title = "Bullet p-Invokes",
-                    ParentId = physics.Id
+                    Parent = physics
                 },
                 new Node {
                     Title = "Re-write bullet character controller.",
                     Description = "The character controller in bullet sucks.",
-                    ParentId = physics.Id
+                    Parent = physics
                 }
             };
             physics.Children = physChildren;
