@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace orgnet.mvc.Models
 {
-    public class SampleData : DropCreateDatabaseAlways<OrgContext>
+    public class SampleData : DropCreateDatabaseIfModelChanges<OrgContext>
     {
         protected override void Seed(OrgContext context)
         {

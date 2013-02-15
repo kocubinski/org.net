@@ -10,7 +10,7 @@
 <ul id="node-list">
     @foreach (var node in Model) {
         <li>
-            <span>@node.Title</span>
+            <a href="@Url.Action("Tree", "Node", new { id = node.Id})">@node.Title</a>
         </li>
     }
 </ul>

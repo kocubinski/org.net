@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Linq;
 using orgnet.mvc.Models;
 
@@ -17,5 +16,6 @@ namespace orgnet.mvc.Controllers
             var topNodes = dbContext.Nodes.Where(n => n.Parent == null);
             return View(topNodes);
         }
+
     }
 }

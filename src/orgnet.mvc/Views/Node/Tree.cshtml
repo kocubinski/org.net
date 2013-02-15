@@ -1,0 +1,28 @@
+﻿@using orgnet.mvc.Models;
+@model Node
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+@helper RenderTree(IEnumerable<Node> nodes) {
+    <ul>
+        @foreach(var node in nodes) {
+            <li>
+                <a href="@Url.Action("Tree", "Node", new { id = node.Id})">@node.Title</a>
+                @if (node.Children.Any()) {
+                    @RenderTree(node.Children)
+                }
+            </li>
+        }
+    </ul>
+}
+
+<div>
+    @if(Model.Children.Any()) {
+        @RenderTree(Model.Children)
+    }
+    else {
+        <h3>No child nodes.</h3>
+    }
+</div>
