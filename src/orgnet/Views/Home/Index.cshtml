@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Org.Net";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+            <p>
+                An org-mode inspired issue tracker.
+            </p>
+        </div>
+    </section>
+}
+<h3><a href="@Url.Action("Index", "Node")">View all parent nodes</a></h3>
