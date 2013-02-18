@@ -1,0 +1,12 @@
+﻿@using orgnet.Models
+@model Content
+
+<div id="primary-content" data-content-id="@Model.Id">
+    @Html.Partial("ContentView", Model)
+</div>
+
+@foreach(Content child in Model.Children) {
+    <div class="child-content" data-content-id="@child.Id">
+        @Html.Partial("ContentView", child)
+    </div>
+}

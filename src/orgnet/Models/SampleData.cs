@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace orgnet.Models
 {
-    public class SampleData : DropCreateDatabaseAlways<OrgContext>
+    public class SampleData : DropCreateDatabaseIfModelChanges<OrgContext>
     {
         protected override void Seed(OrgContext context)
         {
@@ -12,8 +12,7 @@ namespace orgnet.Models
             var zoku = new Task
             {
                 Title = "Zoku",
-                //Description = "Zoku: we do stuff real nice.",
-                Children = zokuChildren
+                Children = zokuChildren,
             };
 
             var networking = new Task
@@ -24,13 +23,11 @@ namespace orgnet.Models
             var netChildren = new List<Node> {
                 new Task {
                     Title = "RPC Framework",
-                    //Description = "Runtime resolution of method calls over networked objects",
-                    Parent = networking
+                    Parent = networking,
                 },
                 new Task {
                     Title = "Lag compensation",
-                    //Description = "Compensating for network latency across connected clients.",
-                    Parent = networking
+                    Parent = networking,
                 }
             };
             networking.Children = netChildren;
@@ -43,12 +40,11 @@ namespace orgnet.Models
             var physChildren = new List<Node> {
                 new Task {
                     Title = "Bullet p-Invokes",
-                    Parent = physics
+                    Parent = physics,
                 },
                 new Task {
                     Title = "Re-write bullet character controller.",
-                    //Description = "The character controller in bullet sucks.",
-                    Parent = physics
+                    Parent = physics,
                 }
             };
             physics.Children = physChildren;
@@ -61,16 +57,22 @@ namespace orgnet.Models
 
         private static void NodeAdder(OrgContext context, Node node)
         {
-            if (node is Content)
+            if (node is Content) {
                 context.Contents.Add((Content)node);
-            else if (node is Task)
-                context.Tasks.Add((Task)node);
-            else
+            }
+            else if (node is Task) {
+                var task = (Task) node;
+                var content = Content.CreateFromTask(task);
+                task.Content = content;
+                context.Tasks.Add(task);
+                context.Contents.Add(content);
+            }
+            else {
                 context.Nodes.Add(node);
+            }
 
             if (node.Children == null || !node.Children.Any()) return;
-            foreach (var child in node.Children)
-            {
+            foreach (var child in node.Children) {
                 NodeAdder(context, child);
             }
         }

@@ -322,8 +322,10 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Node\Index.cshtml" />
     <Content Include="Views\Node\Tree.cshtml" />
-    <Content Include="Views\Node\Content.cshtml" />
+    <Content Include="Views\Node\ContentEdit.cshtml" />
     <Content Include="Views\Shared\PageHeader.cshtml" />
+    <Content Include="Views\Node\ContentView.cshtml" />
+    <Content Include="Views\Node\Contents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

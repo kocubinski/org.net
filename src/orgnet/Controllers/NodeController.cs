@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using orgnet.Models;
 
 namespace orgnet.Controllers
@@ -25,13 +27,28 @@ namespace orgnet.Controllers
             return View(node);
         }
 
-        public ActionResult Content(int id)
+        public ActionResult ContentEdit(int id)
         {
-            var node = dbContext.Tasks.Find(id);
-            var content = (node == null || node.Content == null)
-                              ? new Content()
-                              : node.Content;
+            var node = dbContext.Contents.Find(id);
+            return PartialView(node);
+        }
+
+        public ActionResult Contents(int id)
+        {
+            var task = dbContext.Tasks.Find(id);
+            var content = task.Content;
             return PartialView(content);
+        }
+
+        public JsonResult GetTask(int id)
+        {
+            var task = dbContext.Tasks.Find(id);
+            var res = new {
+                id = task.Id,
+                parent = task.Parent == null ? 0 : task.Parent.Id,
+                content = task.Content == null ? 0 : task.Content.Id
+            };
+            return Json(res, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -1,0 +1,13 @@
+﻿@model orgnet.Models.Content
+
+<div class="content-edit" data-content-id="@Model.Id">
+    <div class="row" style="margin-top: 10px">
+        @Html.LabelFor(m => m.Title)
+        <input type="text" id="title" value="@Model.Title"/>
+        @Html.LabelFor(m => m.Text)
+        <textarea id="text">@Model.Text</textarea>
+    </div>
+    <div class="row">
+        <button id="btn-save-content" class="btn btn-success">Save</button>
+    </div>
+</div>

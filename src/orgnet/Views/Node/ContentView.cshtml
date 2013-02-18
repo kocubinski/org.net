@@ -1,0 +1,28 @@
+﻿@model orgnet.Models.Content
+
+<div class="content-view" data-id="@Model.Id">
+    <div class="row">
+        <h2>@Model.Title</h2>
+    </div>
+
+    <div class="row">
+        <a href="#" class="btn btn-primary btn-small btn-edit-content" data-id="@Model.Id"
+            style="padding-top: 2px; padding-bottom: 2px;">
+            Edit
+        </a>
+        <a href="#" class="btn btn-primary btn-small" 
+            style="padding-top: 2px; padding-bottom: 2px;" id="btn-zoom">
+            Zoom
+        </a>
+    </div>
+
+    <div class="row">
+        <p>@Model.Text</p>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <button id="btn-add-content" class="btn btn-info">Add</button>
+    </div>
+</div>

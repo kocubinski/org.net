@@ -11,7 +11,9 @@
     <ul id="node-list">
         @foreach (var node in Model) {
             <li>
-                <a href="@Url.Action("Tree", "Node", new { id = node.Id})">@node.Title</a>
+                <h3>
+                    <a href="@Url.Action("Tree", "Node", new { id = node.Id})">@node.Title</a>
+                </h3>
             </li>
         }
     </ul>
