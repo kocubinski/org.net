@@ -1,16 +1,12 @@
 ﻿@{
     ViewBag.Title = "Org.Net";
+    ViewBag.Header = "Org.Net";
+    ViewBag.SubHeader = "An org-mode inspired issue tracker.";
 }
+
 @section featured {
     <section class="featured">
-        <div class="container">
-            <div class="page-header">
-                <h1>@ViewBag.Title</h1>
-                <p>
-                    An org-mode inspired issue tracker.
-                </p>
-            </div>
-        </div>
+        @Html.Partial("PageHeader")
     </section>
 }
 <div class="container">

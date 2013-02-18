@@ -26,12 +26,5 @@ namespace orgnet.Controllers
 
             return View();
         }
-
-        public ActionResult PageHeader(string header, string subHeader = null)
-        {
-            ViewBag.Header = header;
-            ViewBag.SubHeader = subHeader ?? "";
-            return PartialView();
-        }
     }
 }
