@@ -5,34 +5,33 @@
         <title>@ViewBag.Title - My ASP.NET MVC Application</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
+        <!--@Styles.Render("~/Content/css") -->
+        <link rel="stylesheet" href="~/Content/bootswatch.css"/>
         @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jquery")
     </head>
     <body>
-        <header>
-            <div class="content-wrapper">
+            <!--div class="content-wrapper">
                 <div class="float-right">
                     <section id="login">
                         @Html.Partial("_LoginPartial")
                     </section>
                 </div>
-            </div>
-        </header>
+            </div-->
         <div id="body">
             @RenderSection("featured", required: false)
             <section class="content-wrapper main-content clear-fix">
                 @RenderBody()
             </section>
         </div>
-        <footer>
-            <div class="content-wrapper">
+        <!--footer>
+            <div class="container">
                 <div class="float-left">
                     <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
                 </div>
             </div>
-        </footer>
+        </!footer-->
 
-        @Scripts.Render("~/bundles/jquery")
         @RenderSection("scripts", required: false)
     </body>
 </html>

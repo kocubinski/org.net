@@ -11,7 +11,7 @@ namespace orgnet.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201302161939375_Initial"; }
+            get { return "201302180022344_Initial"; }
         }
         
         string IMigrationMetadata.Source

@@ -6,6 +6,10 @@ namespace orgnet.Models
     {
         public DbSet<Node> Nodes { get; set; }
 
+        public DbSet<Content> Contents { get; set; }
+
+        public DbSet<Task> Tasks { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Node>()

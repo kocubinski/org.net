@@ -3,15 +3,16 @@
 }
 @section featured {
     <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
+        <div class="container">
+            <div class="page-header">
                 <h1>@ViewBag.Title</h1>
-                <h2>@ViewBag.Message</h2>
-            </hgroup>
-            <p>
-                An org-mode inspired issue tracker.
-            </p>
+                <p>
+                    An org-mode inspired issue tracker.
+                </p>
+            </div>
         </div>
     </section>
 }
-<h3><a href="@Url.Action("Index", "Node")">View all parent nodes</a></h3>
+<div class="container">
+    <h3><a href="@Url.Action("Index", "Node")">View all parent nodes</a></h3>
+</div>

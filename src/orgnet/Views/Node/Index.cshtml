@@ -4,14 +4,14 @@
     ViewBag.Title = "Org.Net";
 }
 
-<h3>Top-level nodes:</h3>
+@Html.Partial("PageHeader", new { header = "Parent Tasks", subHeader =  })
 
-<div>
-<ul id="node-list">
-    @foreach (var node in Model) {
-        <li>
-            <a href="@Url.Action("Tree", "Node", new { id = node.Id})">@node.Title</a>
-        </li>
-    }
-</ul>
+<div class="container">
+    <ul id="node-list">
+        @foreach (var node in Model) {
+            <li>
+                <a href="@Url.Action("Tree", "Node", new { id = node.Id})">@node.Title</a>
+            </li>
+        }
+    </ul>
 </div>

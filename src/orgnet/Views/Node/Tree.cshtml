@@ -7,9 +7,10 @@
 
 @helper RenderTree(IEnumerable<Node> nodes) {
     <ul>
-        @foreach(var node in nodes) {
+        @foreach (var node in nodes) {
             <li>
-                <a href="@Url.Action("Tree", "Node", new { id = node.Id})">@node.Title</a>
+                <!--href="@Url.Action("Tree", "Node", new { id = node.Id})" -->
+                <a href="#" class="node-task" data-id="@node.Id">@node.Title</a>
                 @if (node.Children.Any()) {
                     @RenderTree(node.Children)
                 }
@@ -18,11 +19,25 @@
     </ul>
 }
 
-<div>
-    @if(Model.Children.Any()) {
+<div class="container">
+    <div class="page-header">
+        <h1>@ViewBag.Title</h1>
+    </div>
+</div>
+
+<div class="float-left">
+    @if (Model.Children.Any()) {
         @RenderTree(Model.Children)
     }
     else {
         <h3>No child nodes.</h3>
     }
 </div>
+
+<div id="node-content">
+    @if (ViewBag.ContentId != null) {
+        <h3>Content Id: @ViewBag.ContentId</h3>
+    }
+</div>
+
+<script src="~/Scripts/app/orgnet.node.js"></script>

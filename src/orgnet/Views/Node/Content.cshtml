@@ -1,0 +1,14 @@
+﻿@model orgnet.Models.Content
+
+<div id="edit-content">
+    <div>
+        <button class="float-left">Edit</button>
+        <button>Zooms</button>
+    </div>
+        <br />
+    @Html.LabelFor(m => m.Title)
+    <input type="text" id="title"/>
+    @Html.LabelFor(m => m.Text)
+    <textarea id="text"></textarea>
+    <button id="btn-content-create">Create</button>
+</div>
