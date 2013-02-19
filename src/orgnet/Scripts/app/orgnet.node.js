@@ -1,39 +1,51 @@
 ﻿$(document).ready(
     function() {
-        var getParentContentId = function(el) {
-            return $(el).parent('#content-view').attr('data-content-id');
-        };
-
-        var getContentView = function(id) {
-            return $('div.content-view').find('[data-id="' + id + '"]');
-        };
-
-        var onCreateContentClick = function(e) {
+        var onSaveClick = function(e) {
             var title = $('#title').val();
             var text = $('#text').val();
 
-            alert("title: " + title + " text: " + text);
+            $.ajax({
+                url: '/Node/UpdateContent',
+                type: 'POST',
+                dataType: 'json',
+                data: { id: e.data.contentId, title: title, text: text },
+                success: function(res) {
+                    alert("response: " + JSON.stringify(res));
+                }
+            });
+            //alert("title: " + title + " text: " + text + "id: " + e.data.contentId);
         };
 
         var loadEditView = function(e) {
             var id = e.data.contentId;
-            var contentView = getContentView(id);
-            contentView.parent().load('/Node/ContentEdit/' + id);
-            $('#btn-save-content').bind('click', onCreateContentClick);
-        };
-
-        var bindEditClick = function(e) {
-
+            var div = $('div.content-view[data-id="' + id + '"]').parent();
+            div.empty();
+            div.load('/Node/ContentEdit/' + id,
+                function() {
+                    $('#btn-save-content').bind('click', { contentId: id }, onSaveClick);
+                });
         };
 
         var loadContentView = function(e) {
+            var id = e.data.contentId;
+            var div = $('div.content-edit[data-id="' + id + '"]').parent();
+            div.empty();
+            div.load('/Node/ContentView/' + id,
+                function() {
+                    $('#btn-save-content').bind('click', { contentId: id }, onSaveClick);
+                });
+        };
+
+        var bindEditBtn = function(id) {
+            var btn = $('a.btn-edit-content[data-id="' + id + '"]');
+            btn.bind('click', { contentId: id }, loadEditView);
+        };
+
+        var loadTaskContents = function(e) {
             var model = e.data.taskModel;
             $('div#node-content').load('/Node/Contents/' + model.id,
                 function() {
-                    $('a.btn-edit-content').each(function() {
-                        var id = $(this).attr('data-id');
-                        $(this).bind('click', { contentId: id }, loadEditView);
-                    });
+                    bindEditBtn(model.id);
                 });
         };
 
@@ -45,7 +57,7 @@
                 url: "/Node/GetTask/" + id,
                 success: function(json) {
                     self.data('model', json);
-                    self.bind("click", { taskModel: json, sender: self }, loadContentView);
+                    self.bind("click", { taskModel: json }, loadTaskContents);
                 }
             });
         });

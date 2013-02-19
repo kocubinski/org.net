@@ -3,9 +3,9 @@
 <div class="content-edit" data-content-id="@Model.Id">
     <div class="row" style="margin-top: 10px">
         @Html.LabelFor(m => m.Title)
-        <input type="text" id="title" value="@Model.Title"/>
+        <input type="text" id="title" class="input-xxlarge" value="@Model.Title"/>
         @Html.LabelFor(m => m.Text)
-        <textarea id="text">@Model.Text</textarea>
+        <textarea id="text" class="input-xxlarge" style="height: 200px;">@Model.Text</textarea>
     </div>
     <div class="row">
         <button id="btn-save-content" class="btn btn-success">Save</button>

@@ -33,6 +33,12 @@ namespace orgnet.Controllers
             return PartialView(node);
         }
 
+        public ActionResult ContentView(int id)
+        {
+            var content = dbContext.Contents.Find(id);
+            return PartialView(content);
+        }
+
         public ActionResult Contents(int id)
         {
             var task = dbContext.Tasks.Find(id);
@@ -49,6 +55,21 @@ namespace orgnet.Controllers
                 content = task.Content == null ? 0 : task.Content.Id
             };
             return Json(res, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateContent(Content content)
+        {
+            var res = dbContext.Contents.Find(content.Id);
+            res.Title = content.Title;
+            res.Text = content.Text;
+            dbContext.SaveChanges();
+            return Json(new {result = true});
+        }
+
+        public JsonResult AddContent()
+        {
+            
         }
     }
 }
