@@ -45,7 +45,7 @@
             var model = e.data.taskModel;
             $('div#node-content').load('/Node/Contents/' + model.id,
                 function() {
-                    bindEditBtn(model.id);
+                    bindEditBtn(model.content);
                 });
         };
 

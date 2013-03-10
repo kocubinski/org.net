@@ -66,10 +66,5 @@ namespace orgnet.Controllers
             dbContext.SaveChanges();
             return Json(new {result = true});
         }
-
-        public JsonResult AddContent()
-        {
-            
-        }
     }
 }
