@@ -1,3 +1,5 @@
+*.PublishSettings
+
 # database
 *.mdf
 *.ldf
