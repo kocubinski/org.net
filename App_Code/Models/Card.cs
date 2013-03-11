@@ -9,7 +9,7 @@ public class Card
 
     public string Title { get; set; }
 
-    public string Text { get; set; }
+    public string Description { get; set; }
 
     public DateTime? DateCreated { get; set; }
 
@@ -18,6 +18,17 @@ public class Card
     public virtual IList<Card> Children { get; set; }
 
     public virtual IList<Content> Contents { get; set; }
+
+    public static IEnumerable<Card> GetParents(Card card)
+    {
+        yield return card;
+
+        if (card.Parent != null) {
+            foreach (var cardParent in GetParents(card.Parent)) {
+                yield return cardParent;
+            }
+        }
+    }
 }
 
 public class Content

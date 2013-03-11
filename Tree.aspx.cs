@@ -29,13 +29,20 @@ public partial class Tree : PageBase
         ViewCard = db.Cards.Find(viewCardId);
     }
 
+
+
     protected void Page_PreLoad(object sender, EventArgs e)
     {
         ParseSegments(Request.GetFriendlyUrlSegments());
         taskTree.Model = TreeCard;
         lblTitle.Text = TreeCard.Title;
 
-        contentView.Model = ViewCard;
+        cardView.Model = ViewCard;
+        if (cardView.Model == null)
+            cardView.Visible = false;
+
+        listCrumbs.DataSource = Card.GetParents(TreeCard).Reverse();
+        listCrumbs.DataBind();
     }
 
     protected void Page_Load(object sender, EventArgs e)
