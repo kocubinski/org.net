@@ -6,11 +6,21 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.FriendlyUrls;
 
-public partial class Tree : PageBase
+public partial class Tree : PageBase, IDynamicPage
 {
+    public event EventHandler<PageInvalidatedEventArgs> Invalidated;
+
     public Card TreeCard { get; private set; }
 
     public Card ViewCard { get; private set; }
+
+    public void Invalidate(object sender, PageInvalidatedEventArgs args)
+    {
+        if (Invalidated != null)
+        {
+            Invalidated(sender, args);
+        }
+    }
 
     private void ParseSegments(IList<string> segments)
     {
@@ -29,9 +39,7 @@ public partial class Tree : PageBase
         ViewCard = db.Cards.Find(viewCardId);
     }
 
-
-
-    protected void Page_PreLoad(object sender, EventArgs e)
+    protected void Page_Init(object sender, EventArgs e)
     {
         ParseSegments(Request.GetFriendlyUrlSegments());
         taskTree.Model = TreeCard;
@@ -43,6 +51,8 @@ public partial class Tree : PageBase
 
         listCrumbs.DataSource = Card.GetParents(TreeCard).Reverse();
         listCrumbs.DataBind();
+
+        Invalidate(this, new PageInvalidatedEventArgs(db));
     }
 
     protected void Page_Load(object sender, EventArgs e)

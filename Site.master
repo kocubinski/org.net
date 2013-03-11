@@ -7,6 +7,7 @@
     <!--link href="~/Styles/bootswatch.css" rel="stylesheet" type="text/css" /-->
     <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap-responsive.css" rel="stylesheet" type="text/css" />
+    <link href="~/Styles/orgnet.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -74,5 +75,6 @@
 
     <script type="text/javascript" src="/Scripts/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="/Scripts/orgnet.js"></script>
 </body>
 </html>

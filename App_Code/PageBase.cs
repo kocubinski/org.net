@@ -14,6 +14,6 @@ public class ControlBase<T> : UserControl
 
     protected void Page_Unload(object sender, EventArgs e)
     {
-        db.Dispose();
+        //db.Dispose();
     }
 }

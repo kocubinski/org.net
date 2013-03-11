@@ -1,8 +1,6 @@
-﻿.indent-1 {
-
-    margin-left: 10px;
+﻿.card-child {
+    margin-bottom: 5px !important;
 }
 
-.indent-2 {
-    margin-left: 20px;
+.tree-card-title {
 }
