@@ -10,6 +10,9 @@ public partial class Controls_TaskTree : ControlBase<Card>
 {
     private Panel cardTree;
 
+    private IEventQueue pageEvents;
+    private IDynamicPage dynamicPage;
+
     private UserControl NewTreeCard(Card card)
     {
         var cardControl = (ControlBase<Card>) Page.LoadControl("Controls/TreeCard.ascx");
@@ -42,10 +45,21 @@ public partial class Controls_TaskTree : ControlBase<Card>
 
     protected void Page_Init(object sender, EventArgs e)
     {
-        var page = (Page as IDynamicPage);
-        if (page == null)
-            throw new Exception("This control must be child of an IDynamicPage to function properly.");
-        page.Invalidated += PageOnInvalidated;
+        pageEvents = Page as IEventQueue;
+        if (pageEvents == null)
+            throw new Exception("Parentg page must be IEventQueue to for this control to function.");
+
+        dynamicPage = (Page as IDynamicPage);
+        if (dynamicPage == null)
+            throw new Exception("This control must be child of an IEventQueue to function properly.");
+        dynamicPage.Invalidated += PageOnInvalidated;
+
+        CreateTree();
+    }
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        btnCreateCard.PostBackUrl = Request.Url.LocalPath + "?action=create&id=" + Model.Id;
     }
 
     private void PageOnInvalidated(object sender, PageInvalidatedEventArgs e)
@@ -60,13 +74,25 @@ public partial class Controls_TaskTree : ControlBase<Card>
         }
     }
 
-    protected void Page_PreLoad(object sender, EventArgs e)
+    public void CreateCard()
     {
-        var postback = IsPostBack;
-        CreateTree();
+        var card = new Card {
+                                Title = txtNewCardTitle.Text,
+                                Description = txtNewCardDescription.Text,
+                                Parent = db.Cards.Find(Model.Id)
+                            };
+        db.Cards.Add(card);
+        db.SaveChanges();
+
+        pageEvents.Enqueue((s, args) => dynamicPage.Invalidate(s, new PageInvalidatedEventArgs(db)));
     }
 
-    protected void Page_PreRender(object sender, EventArgs e)
+    public void DeleteCard(int id)
     {
+        var card = db.Cards.Find(id);
+        db.Cards.Remove(card);
+        db.SaveChanges();
+
+        pageEvents.Enqueue((s, args) => dynamicPage.Invalidate(s, new PageInvalidatedEventArgs(db)));
     }
 }

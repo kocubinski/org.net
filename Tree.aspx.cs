@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,8 +7,10 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.FriendlyUrls;
 
-public partial class Tree : PageBase, IDynamicPage
+public partial class Tree : PageBase, IEventQueue, IDynamicPage
 {
+    private readonly Queue<EventHandler> queue = new Queue<EventHandler>();
+
     public event EventHandler<PageInvalidatedEventArgs> Invalidated;
 
     public Card TreeCard { get; private set; }
@@ -20,6 +23,11 @@ public partial class Tree : PageBase, IDynamicPage
         {
             Invalidated(sender, args);
         }
+    }
+
+    public void Enqueue(EventHandler handler)
+    {
+        queue.Enqueue(handler);
     }
 
     private void ParseSegments(IList<string> segments)
@@ -52,10 +60,55 @@ public partial class Tree : PageBase, IDynamicPage
         listCrumbs.DataSource = Card.GetParents(TreeCard).Reverse();
         listCrumbs.DataBind();
 
-        Invalidate(this, new PageInvalidatedEventArgs(db));
+        var action = Request.QueryString["action"];
+        var sId = Request.QueryString["id"];
+        
+        if (action != null & sId != null) {
+            var id = int.Parse(sId);
+
+            var res = Controls.Flatten()
+                .Where(c => c is ControlBase<Card>)
+                .Cast<ControlBase<Card>>();
+
+            var card = Controls.Flatten()
+                .Where(c => c is ControlBase<Card>)
+                .Cast<ControlBase<Card>>()
+                .First(cb => cb.Model.Id == id);
+
+            if (action == "create" && id == card.Model.Id)
+                queue.Enqueue((s, args) => CreateCard(id));
+            else if (action == "delete")
+                queue.Enqueue((s, args) => DeleteCard(card.Model.Id));
+        }
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        while (queue.Count != 0) {
+            var handler = queue.Dequeue();
+            handler(this, new EventArgs());
+        }
+    }
+
+    public void CreateCard(int id)
+    {
+        var card = new Card {
+                                Title = txtNewCardTitle.Text,
+                                Description = txtNewCardDescription.Text,
+                                Parent = db.Cards.Find(id)
+                            };
+        db.Cards.Add(card);
+        db.SaveChanges();
+
+        queue.Enqueue((s, args) => Invalidate(s, new PageInvalidatedEventArgs(db)));
+    }
+
+    public void DeleteCard(int id)
+    {
+        var card = db.Cards.Find(id);
+        db.Cards.Remove(card);
+        db.SaveChanges();
+
+        queue.Enqueue((s, args) => Invalidate(s, new PageInvalidatedEventArgs(db)));
     }
 }

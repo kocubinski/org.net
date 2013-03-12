@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Web.UI;
 
@@ -20,6 +21,11 @@ public class PageInvalidatedEventArgs : EventArgs
     {
         get { return _db; }
     }
+}
+
+public interface IEventQueue
+{
+    void Enqueue(EventHandler handler);
 }
 
 public interface IDynamicPage
